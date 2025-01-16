@@ -5,7 +5,35 @@ Descripción del Sistema GAS
 El sistema GAS está diseñado para manejar las habilidades, atributos y efectos dentro del juego. En este proyecto, la lógica del GAS se ha implementado de forma centralizada en el Player Controller, lo que permite la gestión de las habilidades y atributos de manera más flexible y accesible a través del control de un Character específico.
 
 Componentes Clave:
-Player Controller (PC)
+ProjectName.h
+Add = 
+#pragma once
+
+#include "CoreMinimal.h"
+UENUM(BlueprintType)
+enum class EGA_AbilityInputID : uint8
+{
+	// 0 none
+	None UMETA(DisplayName = "None"),
+	// 1 confirm
+	Confirm UMETA(DisplayName = "Confirm"),
+	// 2 cancel
+	Cancel UMETA(DisplayName = "Cancel"),
+	// 3 Ability1 
+	Ability1 UMETA(DisplayName = "Ability1"),
+	// 4 Ability2
+	Ability2 UMETA(DisplayName = "Ability2"),
+	// 7 ability 3
+	Ability3 UMETA(DisplayName = "Ability3"),
+	// 6 Jump
+	Ability4 UMETA(DisplayName = "Ability4"),
+	//7 
+	Ability5 UMETA(DisplayName = "Ability5"),
+};
+
+
+
+Gas Player Controller (PC)
 
 El Player Controller se encarga de manejar la inicialización y gestión de las habilidades y atributos del jugador.
 Dentro del controlador, se gestionan las habilidades activadas, el seguimiento del estado de la habilidad y la activación de eventos relacionados.
