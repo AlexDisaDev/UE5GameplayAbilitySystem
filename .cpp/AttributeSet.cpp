@@ -2,7 +2,7 @@
 
 
 #include "AttributeSet.h"
-#include "CharacterEre.h"
+#include "GasCharacter.h"
 
 UAttributeSet::UAttributeSet()
 {
@@ -61,7 +61,7 @@ void UAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, floa
 					if (ControlledCharacter)
 					{						
 						ControlledCharacter->GetCharacterMovement()->MaxWalkSpeed = NewValue;
-						UE_LOG(LogTemp, Warning, TEXT("El nuevo valor de MaxMovSpeed es: %f"), NewValue);				
+						//UE_LOG(LogTemp, Warning, TEXT("El nuevo valor de MaxMovSpeed es: %f"), NewValue);				
 
 					}
 				}

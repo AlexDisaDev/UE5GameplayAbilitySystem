@@ -8,7 +8,7 @@
 #include "AbilitySystemGlobals.h"
 #include "PcEre.h"
 #include "CharacterEre.h"
-#include "T_playMontageAndWaitForEvent.generated.h"
+#include "playMontageAndWaitForEvent.generated.h"
 
 
 class APcEre;
@@ -22,12 +22,12 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FACMplayMontageAndWaitForEventDeleg
  *
  */
 UCLASS()
-class TOKIOGAME_API UT_playMontageAndWaitForEvent : public UAbilityTask
+class TOKIOGAME_API UplayMontageAndWaitForEvent : public UAbilityTask
 {
 	GENERATED_BODY()
 
 public:
-	UT_playMontageAndWaitForEvent(const FObjectInitializer& ObjectInitializer);
+	UplayMontageAndWaitForEvent(const FObjectInitializer& ObjectInitializer);
 
 	virtual void Activate();
 
@@ -56,7 +56,7 @@ public:
 
 
 	UFUNCTION(BlueprintCallable, Category = "Ability|Task", meta = (HidePin = "OwningAbility", DefaultToSelf = "OwingAbility", BlueprintInternalUseOnly = "TRUE"))
-	static UT_playMontageAndWaitForEvent* playMontageAndWaitForEvent(UGameplayAbility* OwingAbility, FName taskInstanceName, UAnimMontage* Montageplay,
+	static UplayMontageAndWaitForEvent* playMontageAndWaitForEvent(UGameplayAbility* OwingAbility, FName taskInstanceName, UAnimMontage* Montageplay,
 		FGameplayTagContainer EventTags, float Rate = 1.f, FName StartSection = NAME_None, bool bstopWhenAbilityEnds = true, float AnimRootMotionTranslationScale = 1.f);
 
 private:

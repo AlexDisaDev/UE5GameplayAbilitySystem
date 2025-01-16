@@ -7,7 +7,7 @@
 #include "AbilitySystemInterface.h" // Interfaz para el Ability System
 #include "AbilitySystemComponent.h" // Incluye tu set de atributos
 #include "AttributeSet.h" // attribute set creado como mi clase en c++
-#include "PS_Ere.generated.h"
+#include "GasPlayerState.generated.h"
 
 
 class CharacterEre;

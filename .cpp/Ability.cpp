@@ -17,7 +17,7 @@ void UAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FG
 		ACharacter* Character = Cast<ACharacter>(AvatarActor);
 		// Verificar si el AvatarActor es un ACharacter (ya que los personajes tienen un CharacterMovementComponent)
 		AController* Controller = Character->GetController();
-		APcEre* CustomController = Cast<APcEre>(Controller);
+		AGasPlayerController* CustomController = Cast<AGasPlayerController>(Controller);
 		if(Character)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("char valido"));

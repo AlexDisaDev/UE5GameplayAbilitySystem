@@ -9,7 +9,7 @@
 #include "AbilitySystemComponent.h"
 #include "Delegates/DelegateCombinations.h"
 #include "GameplayEffectExtension.h"
-#include "AS_Ere.generated.h"
+#include "AttributeSet.generated.h"
 
 class AGasCharacter;
 
@@ -26,12 +26,12 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnResourceChange, float, currentVa
 
 
 UCLASS()
-class /*YourProjectName*/_API UAS_Ere : public UAttributeSet
+class /*YourProjectName*/_API UAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
 	
 public:
-	UAS_Ere();
+	UAttributeSet();
 
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
@@ -47,43 +47,43 @@ public:
 	//Attributos
 	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = Onrep_Health)
 	FGameplayAttributeData Health;
-	ATTRIBUTE_ACCESSORS(UAS_Ere, Health);
+	ATTRIBUTE_ACCESSORS(UAttributeSet, Health);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = Onrep_MaxHealth)
 	FGameplayAttributeData MaxHealth;
-	ATTRIBUTE_ACCESSORS(UAS_Ere, MaxHealth);
+	ATTRIBUTE_ACCESSORS(UAttributeSet, MaxHealth);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = Onrep_HealthRegen)
 	FGameplayAttributeData HealthRegen;
-	ATTRIBUTE_ACCESSORS(UAS_Ere, HealthRegen);
+	ATTRIBUTE_ACCESSORS(UAttributeSet, HealthRegen);
 
 	UPROPERTY(BlueprintReadOnly, Category = "freeze", ReplicatedUsing = Onrep_Freeze)
 	FGameplayAttributeData Freeze;
-	ATTRIBUTE_ACCESSORS(UAS_Ere, Freeze);
+	ATTRIBUTE_ACCESSORS(UAttributeSet, Freeze);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Freeze", ReplicatedUsing = Onrep_MaxFreeze)
 	FGameplayAttributeData MaxFreeze;
-	ATTRIBUTE_ACCESSORS(UAS_Ere, MaxFreeze);
+	ATTRIBUTE_ACCESSORS(UAttributeSet, MaxFreeze);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Freeze", ReplicatedUsing = Onrep_FreezeRegen)
 	FGameplayAttributeData FreezeRegen;
-	ATTRIBUTE_ACCESSORS(UAS_Ere, FreezeRegen);
+	ATTRIBUTE_ACCESSORS(UAttributeSet, FreezeRegen);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Movement", ReplicatedUsing = Onrep_MovSpeed)
 	FGameplayAttributeData MovSpeed;
-	ATTRIBUTE_ACCESSORS(UAS_Ere, MovSpeed);
+	ATTRIBUTE_ACCESSORS(UAttributeSet, MovSpeed);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Movement", ReplicatedUsing = Onrep_MaxMovSpeed)
 	FGameplayAttributeData MaxMovSpeed;
-	ATTRIBUTE_ACCESSORS(UAS_Ere, MaxMovSpeed);
+	ATTRIBUTE_ACCESSORS(UAttributeSet, MaxMovSpeed);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Input", ReplicatedUsing = Onrep_Input)
 	FGameplayAttributeData Input;
-	ATTRIBUTE_ACCESSORS(UAS_Ere, Input);
+	ATTRIBUTE_ACCESSORS(UAttributeSet, Input);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Input", ReplicatedUsing = Onrep_MaxInput)
 	FGameplayAttributeData MaxInput;
-	ATTRIBUTE_ACCESSORS(UAS_Ere, MaxInput);
+	ATTRIBUTE_ACCESSORS(UAttributeSet, MaxInput);
 
 	FOnResourceChange OnhealthChangedelegate;
 

@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PlayerControllerParkour.h"
+#include "GasPlayerController.h"
 #include "Ability.h"
 
-APlayerControllerParkour::APlayerControllerParkour()
+AGasPlayerController::AGasPlayerController()
 {
 		
 	// en el character de clase GasCharacter debe configurarse 
@@ -24,7 +24,7 @@ APlayerControllerParkour::APlayerControllerParkour()
 
 }
 
-void APlayerControllerParkour::SetupInputComponent()
+void AGasPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 	
@@ -38,15 +38,15 @@ void APlayerControllerParkour::SetupInputComponent()
 
 			if (DefaultMappingContext)
 			{
-					EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerControllerParkour::Move);
-					EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerControllerParkour::Look);
-					EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &APlayerControllerParkour::Jump);
-					EnhancedInputComponent->BindAction(SlideAction, ETriggerEvent::Triggered, this, &APlayerControllerParkour::Slide);
-					EnhancedInputComponent->BindAction(Ability1, ETriggerEvent::Triggered, this, &APlayerControllerParkour::Ability1Action1);
-					EnhancedInputComponent->BindAction(Ability2, ETriggerEvent::Triggered, this, &APlayerControllerParkour::Ability1Action2);
-					EnhancedInputComponent->BindAction(Ability3, ETriggerEvent::Triggered, this, &APlayerControllerParkour::Ability1Action3);
-					EnhancedInputComponent->BindAction(Ability4, ETriggerEvent::Triggered, this, &APlayerControllerParkour::Ability1Action4);
-					EnhancedInputComponent->BindAction(Ability5, ETriggerEvent::Triggered, this, &APlayerControllerParkour::Ability1Action5);
+					EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AGasPlayerController::Move);
+					EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AGasPlayerController::Look);
+					EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AGasPlayerController::Jump);
+					EnhancedInputComponent->BindAction(SlideAction, ETriggerEvent::Triggered, this, &AGasPlayerController::Slide);
+					EnhancedInputComponent->BindAction(Ability1, ETriggerEvent::Triggered, this, &AGasPlayerController::Ability1Action1);
+					EnhancedInputComponent->BindAction(Ability2, ETriggerEvent::Triggered, this, &AGasPlayerController::Ability1Action2);
+					EnhancedInputComponent->BindAction(Ability3, ETriggerEvent::Triggered, this, &AGasPlayerController::Ability1Action3);
+					EnhancedInputComponent->BindAction(Ability4, ETriggerEvent::Triggered, this, &AGasPlayerController::Ability1Action4);
+					EnhancedInputComponent->BindAction(Ability5, ETriggerEvent::Triggered, this, &AGasPlayerController::Ability1Action5);
 
 
 					
@@ -55,7 +55,7 @@ void APlayerControllerParkour::SetupInputComponent()
 	}
 }
 
-void APlayerControllerParkour::BeginPlay()
+void AGasPlayerController::BeginPlay()
 {
 	
 	
@@ -72,7 +72,7 @@ void APlayerControllerParkour::BeginPlay()
 
 }
 //===========================================================================================
-void APlayerControllerParkour::Tick(float DeltaTime)
+void AGasPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//
@@ -93,7 +93,7 @@ void APlayerControllerParkour::Tick(float DeltaTime)
 
 }
 //===========================================================================================
-void APlayerControllerParkour::OnPossess(APawn* aPawn)
+void AGasPlayerController::OnPossess(APawn* aPawn)
 {
 	Super::OnPossess(aPawn);
 
@@ -130,7 +130,7 @@ void APlayerControllerParkour::OnPossess(APawn* aPawn)
 }
 //===========================================================================================
 
-void APlayerControllerParkour::Move(const FInputActionValue& Value)
+void AGasPlayerController::Move(const FInputActionValue& Value)
 {
 	
 	if ( ControlledPawn != nullptr)
@@ -154,7 +154,7 @@ void APlayerControllerParkour::Move(const FInputActionValue& Value)
 }
 //===========================================================================================
 
-void APlayerControllerParkour::Look(const FInputActionValue& Value)
+void AGasPlayerController::Look(const FInputActionValue& Value)
 {
 	FVector MouseLocation, MouseDirection;
 	bAiming = true;
@@ -176,7 +176,7 @@ void APlayerControllerParkour::Look(const FInputActionValue& Value)
 }			
 //===========================================================================================
 
-void APlayerControllerParkour::Jump(const FInputActionValue& Value)
+void AGasPlayerController::Jump(const FInputActionValue& Value)
 {
 	
 	if (ControlledCharacter != nullptr)
@@ -249,7 +249,7 @@ void APlayerControllerParkour::Jump(const FInputActionValue& Value)
 						bool hit2 = GetWorld()->SweepSingleByChannel(HitResult, Position, Position - FVector(0.f, 0.f, 2000.f), FQuat::Identity, ECC_Visibility, Sphere, QueryParams);
 						DrawDebugSphere(GetWorld(), HitResult.Location, 10.0f, 12, FColor::Purple, false, 2.0f);
 						float distanceToFall = HitResult.Distance;
-						GetWorld()->GetTimerManager().SetTimer(JumpDistances, this, &APlayerControllerParkour::JumpZVelocity, 0.1f, true);
+						GetWorld()->GetTimerManager().SetTimer(JumpDistances, this, &AGasPlayerController::JumpZVelocity, 0.1f, true);
 						DistanceToFloorRecieved = distanceToFall;
 						
 						
@@ -258,7 +258,7 @@ void APlayerControllerParkour::Jump(const FInputActionValue& Value)
 				}
 			}
 
-			//GetWorld()->GetTimerManager().SetTimer(JumpDistances, this, &APlayerControllerParkour::JumpDistance, 0.1f, true);
+			//GetWorld()->GetTimerManager().SetTimer(JumpDistances, this, &AGasPlayerController::JumpDistance, 0.1f, true);
 		}
 		else if (bIsSliding && bCantJump)
 		{
@@ -267,7 +267,7 @@ void APlayerControllerParkour::Jump(const FInputActionValue& Value)
 			//ControlledCharacter->Jump();
 			ControlledCharacter->Jump();
 			bCanSlide = true;
-			GetWorld()->GetTimerManager().SetTimer(JumpDistances, this, &APlayerControllerParkour::JumpDistance, 0.1f, true);
+			GetWorld()->GetTimerManager().SetTimer(JumpDistances, this, &AGasPlayerController::JumpDistance, 0.1f, true);
 			GetWorld()->GetTimerManager().ClearTimer(ActSlidePosition);
 			
 		}
@@ -284,7 +284,7 @@ void APlayerControllerParkour::Jump(const FInputActionValue& Value)
 }
 //===========================================================================================
 
-void APlayerControllerParkour::Slide(const FInputActionValue& Value)
+void AGasPlayerController::Slide(const FInputActionValue& Value)
 {
 	
 	FVector Velocity = ControlledCharacter->GetCharacterMovement()->Velocity;
@@ -301,7 +301,7 @@ void APlayerControllerParkour::Slide(const FInputActionValue& Value)
 		ControlledCharacter->GetCharacterMovement()->SetCrouchedHalfHeight(30.f);
 		ControlledCharacter->GetCameraBoom()->SetRelativeLocation(CameraBoomSliding);
 	
-		GetWorld()->GetTimerManager().SetTimer(ActSlidePosition, this, &APlayerControllerParkour::tracefloorWhileSliding, 0.01f, true);
+		GetWorld()->GetTimerManager().SetTimer(ActSlidePosition, this, &AGasPlayerController::tracefloorWhileSliding, 0.01f, true);
 	}
 	else if (!bCanSlide)
 	{
@@ -311,7 +311,7 @@ void APlayerControllerParkour::Slide(const FInputActionValue& Value)
 
 //===========================================================================================
 // Esta función devuelve una acción de entrada (UInputAction) asociada con un ID de entrada de habilidad (EGA_AbilityInputID).
-UInputAction* APlayerControllerParkour::GetInputActionFromAbilityInputID(EGA_AbilityInputID InputID)
+UInputAction* AGasPlayerController::GetInputActionFromAbilityInputID(EGA_AbilityInputID InputID)
 {
 	static TMap<EGA_AbilityInputID, UInputAction*> InputActionMap = {
 		{EGA_AbilityInputID::Ability1, Ability1}, // Asocia Ability1 con su acción de entrada correspondiente.
@@ -331,18 +331,18 @@ UInputAction* APlayerControllerParkour::GetInputActionFromAbilityInputID(EGA_Abi
 }
 //===========================================================================================
 
-void APlayerControllerParkour::Ability1Action1(){}
+void AGasPlayerController::Ability1Action1(){}
 
-void APlayerControllerParkour::Ability1Action2(){}
+void AGasPlayerController::Ability1Action2(){}
 
-void APlayerControllerParkour::Ability1Action3(){}
+void AGasPlayerController::Ability1Action3(){}
 
-void APlayerControllerParkour::Ability1Action4(){}
+void AGasPlayerController::Ability1Action4(){}
 
-void APlayerControllerParkour::Ability1Action5(){}
+void AGasPlayerController::Ability1Action5(){}
 
 //===========================================================================================
-void APlayerControllerParkour::PermissionAbilityInputs(AGasCharacter* character)
+void AGasPlayerController::PermissionAbilityInputs(AGasCharacter* character)
 {
 	
 	if (character && character->AbilitySystemComponenet)
@@ -364,8 +364,8 @@ void APlayerControllerParkour::PermissionAbilityInputs(AGasCharacter* character)
 						const int32 InputID = static_cast<int32>(DefaultAbility->AbilityInputID);
 
 						// Vincular la acción con los eventos
-						EInputComponent->BindAction(InputAction, ETriggerEvent::Started, this, &APlayerControllerParkour::OnAbilityInputPressed, InputID);
-						EInputComponent->BindAction(InputAction, ETriggerEvent::Completed, this, &APlayerControllerParkour::OnAbilityInputReleased, InputID);
+						EInputComponent->BindAction(InputAction, ETriggerEvent::Started, this, &AGasGasPlayerController::OnAbilityInputPressed, InputID);
+						EInputComponent->BindAction(InputAction, ETriggerEvent::Completed, this, &AGasGasPlayerController::OnAbilityInputReleased, InputID);
 
 						// Log para depuración
 						UE_LOG(LogTemp, Warning, TEXT("Acción vinculada para Habilidad: %s con InputID: %d"),
@@ -392,7 +392,7 @@ void APlayerControllerParkour::PermissionAbilityInputs(AGasCharacter* character)
 }
 
 //===========================================================================================
-void APlayerControllerParkour::SendAbilityLocalInput(const FInputActionValue& Value, int32 InputID)
+void AGasGasPlayerController::SendAbilityLocalInput(const FInputActionValue& Value, int32 InputID)
 {
 	if (!ControlledCharacter->AbilitySystemComponenet)
 	{
@@ -408,26 +408,26 @@ void APlayerControllerParkour::SendAbilityLocalInput(const FInputActionValue& Va
 	}
 }
 //===========================================================================================
-void APlayerControllerParkour::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+void AGasGasPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(APlayerControllerParkour, AimDirection);
+	DOREPLIFETIME(AGasGasPlayerController, AimDirection);
 }
 //===========================================================================================
-bool APlayerControllerParkour::ServerSetAimDirection_Validate(const FVector& NewAimDirection)
+bool AGasGasPlayerController::ServerSetAimDirection_Validate(const FVector& NewAimDirection)
 {
 	return true;
 }
 
-void APlayerControllerParkour::ServerSetAimDirection_Implementation(const FVector& NewAimDIrection)
+void AGasGasPlayerController::ServerSetAimDirection_Implementation(const FVector& NewAimDIrection)
 {
 	AimDirection = NewAimDIrection;
 }
 
 //===========================================================================================
 
-void APlayerControllerParkour::OnAbilityInputPressed(int32 InputID)
+void AGasGasPlayerController::OnAbilityInputPressed(int32 InputID)
 {
 	if (ControlledCharacter->AbilitySystemComponenet)
 	{
@@ -435,7 +435,7 @@ void APlayerControllerParkour::OnAbilityInputPressed(int32 InputID)
 	}
 }
 //===========================================================================================
-void APlayerControllerParkour::OnAbilityInputReleased(int32 InputID)
+void AGasGasPlayerController::OnAbilityInputReleased(int32 InputID)
 {
 	if (ControlledCharacter->AbilitySystemComponenet)
 	{
@@ -444,12 +444,12 @@ void APlayerControllerParkour::OnAbilityInputReleased(int32 InputID)
 
 }
 //===========================================================================================
-void APlayerControllerParkour::ActForward()
+void AGasGasPlayerController::ActForward()
 {
 	AimDirection =  ControlledPawn->GetActorForwardVector();
 }
 //===========================================================================================
-void APlayerControllerParkour::tracefloorWhileSliding()
+void AGasGasPlayerController::tracefloorWhileSliding()
 {
 	FVector StartPos = ControlledCharacter->GetActorLocation();
 	FVector EndPos = ControlledCharacter->GetActorLocation();
@@ -488,7 +488,7 @@ void APlayerControllerParkour::tracefloorWhileSliding()
 
 }
 //===========================================================================================
-void APlayerControllerParkour::allignPlayerToFloor()
+void AGasGasPlayerController::allignPlayerToFloor()
 {
 	const FFindFloorResult& CurrentFloor = ControlledCharacter->GetCharacterMovement()->CurrentFloor;
 
@@ -500,7 +500,7 @@ void APlayerControllerParkour::allignPlayerToFloor()
 	ControlledCharacter->SetActorRotation(interPolResult);
 }
 //===========================================================================================
-void APlayerControllerParkour::FootFrwContact()
+void AGasGasPlayerController::FootFrwContact()
 {
 	const FFindFloorResult& CurrentFloor = ControlledCharacter->GetCharacterMovement()->CurrentFloor;
 	AActor* hitActor = CurrentFloor.HitResult.GetActor();
@@ -594,7 +594,7 @@ void APlayerControllerParkour::FootFrwContact()
 	 }
 }
 //===========================================================================================
-bool APlayerControllerParkour::CapsuleTrace(FHitResult HitResult, FVector startPosition, FVector EndPosition, float capsuleRadius, float capsuleHalfHeight, ECollisionChannel collisionChannel, FCollisionQueryParams collisionparams)
+bool AGasGasPlayerController::CapsuleTrace(FHitResult HitResult, FVector startPosition, FVector EndPosition, float capsuleRadius, float capsuleHalfHeight, ECollisionChannel collisionChannel, FCollisionQueryParams collisionparams)
 {
 
 	bool bHit = GetWorld()->SweepSingleByChannel(
@@ -609,7 +609,7 @@ bool APlayerControllerParkour::CapsuleTrace(FHitResult HitResult, FVector startP
 	return bHit;
 }
 //===========================================================================================
-bool APlayerControllerParkour::SphereTrace(FHitResult HitResult, FVector startPosition, FVector EndPosition, float capsuleRadius, ECollisionChannel collisionChannel, FCollisionQueryParams collisionparams)
+bool AGasGasPlayerController::SphereTrace(FHitResult HitResult, FVector startPosition, FVector EndPosition, float capsuleRadius, ECollisionChannel collisionChannel, FCollisionQueryParams collisionparams)
 {
 	bool bHit = GetWorld()->SweepSingleByChannel(
 		HitResult,         // Resultado del hit
@@ -625,7 +625,7 @@ bool APlayerControllerParkour::SphereTrace(FHitResult HitResult, FVector startPo
 
 //===========================================================================================
 
-void APlayerControllerParkour::FindCurrentFloorAngleAndDirection()
+void AGasGasPlayerController::FindCurrentFloorAngleAndDirection()
 {
 	const FFindFloorResult& CurrentFloor = ControlledCharacter->GetCharacterMovement()->CurrentFloor;
 	FVector ImpactNormal=  CurrentFloor.HitResult.ImpactNormal;
@@ -679,12 +679,12 @@ void APlayerControllerParkour::FindCurrentFloorAngleAndDirection()
 	
 }
 //===========================================================================================
-void APlayerControllerParkour::CrouchUnCrouchPosition(FVector CameraBoomPositionObj, FVector ActualCameraBoomPosition,  float interpSeconds)
+void AGasGasPlayerController::CrouchUnCrouchPosition(FVector CameraBoomPositionObj, FVector ActualCameraBoomPosition,  float interpSeconds)
 {
 	CameraBoomPositionObj = FMath::VInterpTo(CameraBoomPositionObj, ActualCameraBoomPosition, GetWorld()->GetDeltaSeconds(), 2.0f);
 }
 
-void APlayerControllerParkour::JumpDistance()
+void AGasGasPlayerController::JumpDistance()
 {
 	FVector StartLocation = ControlledCharacter->GetActorLocation();
 
@@ -756,7 +756,7 @@ void APlayerControllerParkour::JumpDistance()
 	}
 }
 //===========================================================================================
-void APlayerControllerParkour::JumpZVelocity()
+void AGasGasPlayerController::JumpZVelocity()
 {
 	JumpVelocityZ = ControlledCharacter->GetCharacterMovement()->Velocity.Z;
 
@@ -778,7 +778,7 @@ void APlayerControllerParkour::JumpZVelocity()
 	}
 }
 //===========================================================================================
-void APlayerControllerParkour::ResetMovements(FRotator RotationToFrwPosition, bool crouch, FVector charMeshSlidePosition,FVector cameraPosition, float crouchSpeed, bool IsSliding , UAnimMontage* AnimStop,UAnimMontage* AnimPlay)
+void AGasGasPlayerController::ResetMovements(FRotator RotationToFrwPosition, bool crouch, FVector charMeshSlidePosition,FVector cameraPosition, float crouchSpeed, bool IsSliding , UAnimMontage* AnimStop,UAnimMontage* AnimPlay)
 {
 	ControlledCharacter->SetActorRotation(RotationToFrwPosition);
 	if (!crouch)
@@ -797,7 +797,7 @@ void APlayerControllerParkour::ResetMovements(FRotator RotationToFrwPosition, bo
 		{
 			ControlledCharacter->GetMesh()->GetAnimInstance()->Montage_Play(AnimPlay, 1.f);
 		}
-		GetWorld()->GetTimerManager().SetTimer(JumpDistances, this, &APlayerControllerParkour::JumpDistance, 0.1f, true);
+		GetWorld()->GetTimerManager().SetTimer(JumpDistances, this, &AGasGasPlayerController::JumpDistance, 0.1f, true);
 		GetWorld()->GetTimerManager().ClearTimer(ActSlidePosition);
 	}
 	else

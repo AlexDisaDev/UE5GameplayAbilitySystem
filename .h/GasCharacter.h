@@ -28,7 +28,7 @@ class UAbilitySystemComponent;
 class UAttributeSet;
 class UGameplayAbility;
 class UGameplayEffect;
-class APlayerControllerParkour;
+class AGasPlayerController;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnResourceCharacterChange, float, PercentValue);
@@ -93,7 +93,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay Ability System")
 	TArray<TSubclassOf<UGameplayEffect>> StartingEffects;
 
-	void SetupGasinputs(APlayerControllerParkour* PlayerController);
+	void SetupGasinputs(AGasPlayerController* PlayerController);
 
 	void SetupAbilities();
 
@@ -108,7 +108,7 @@ public:
 	AGasCharacter* Character;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Controller")
-	APlayerControllerParkour* PC;
+	AGasPlayerController* PC;
 
 	/*---- Gameplay Ability System End ---*/
 	bool IsDying;

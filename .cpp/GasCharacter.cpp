@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "GasCharacter.h"
-#include <PlayerControllerParkour.h>
+#include "GasCharacter.h
+#include <GasPlayerController.h>
 
 // Sets default values
 AGasCharacter::AGasCharacter()
@@ -71,7 +71,7 @@ void AGasCharacter::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 
 	APS_Ere* playerState = GetPlayerState<APS_Ere>();
-	PC = Cast<APlayerControllerParkour>(NewController);
+	PC = Cast<AGasPlayerController>(NewController);
 	if (IsValid(playerState))
 	{
 		AbilitySystemComponenet = playerState->GetAbilitySystemComponent();
@@ -107,7 +107,7 @@ UAbilitySystemComponent* AGasCharacter::GetAbilitySystemComponent() const
 	return AbilitySystemComponenet;
 }
 
-void AGasCharacter::SetupGasinputs(APlayerControllerParkour* PlayerController)
+void AGasCharacter::SetupGasinputs(AGasPlayerController* PlayerController)
 {
 	//if (GetLocalRole() != ROLE_Authority)
 	//{

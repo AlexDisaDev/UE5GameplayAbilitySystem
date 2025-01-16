@@ -9,7 +9,7 @@
 #include "T_PlayMontageAndWaitForEvent.h"
 #include "T_Projectile.h"
 #include "GasCharacter.h"
-#include "PlayerControllerParkour.h"
+#include "GasPlayerController.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"

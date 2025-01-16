@@ -19,7 +19,7 @@
 #include "Net/UnrealNetwork.h"
 #include "GameplayAbilities/Public/GameplayAbilitySpec.h" // Para FGameplayAbilitySpec
 #include "GameplayAbilities/Public/AbilitySystemComponent.h" // Para UAbilitySystemComponent
-#include "PcEre.generated.h"
+#include "GasPlayerController.generated.h"
 
 
 
@@ -43,14 +43,14 @@ struct FAngleResult
  * 
  */
 UCLASS()
-class /*YourProjectName*/_API PlayerControllerParkour : public APlayerController
+class /*YourProjectName*/_API GasPlayerController : public APlayerController
 
 {
 	GENERATED_BODY()
 
 public:
 
-	PlayerControllerParkour();
+	GasPlayerController();
 	//APS_Ere* MyPlayerState;
 
 
