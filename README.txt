@@ -1,5 +1,5 @@
 Gameplay Ability System (GAS)
-Este proyecto utiliza el Gameplay Ability System (GAS) de Unreal Engine 4 para gestionar las habilidades, atributos y efectos del juego. A continuación, se detalla cómo se estructura y se integra este sistema en el código, comenzando desde el Player Controller hasta un Character específico.
+Este proyecto utiliza el Gameplay Ability System (GAS) de Unreal Engine 5.XX para gestionar el Enhanced input system y las habilidades, atributos y efectos del juego. A continuación, se detalla cómo se estructura y se integra este sistema en el código, comenzando desde el Player Controller hasta un Character específico.
 
 Descripción del Sistema GAS
 El sistema GAS está diseñado para manejar las habilidades, atributos y efectos dentro del juego. En este proyecto, la lógica del GAS se ha implementado de forma centralizada en el Player Controller, lo que permite la gestión de las habilidades y atributos de manera más flexible y accesible a través del control de un Character específico.
