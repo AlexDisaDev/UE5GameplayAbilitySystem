@@ -23,7 +23,8 @@ AGasPlayerController::AGasPlayerController()
 	CameraBoomSliding = FVector(0.f, 0.f, 65.f);
 
 }
-
+//Configuracion de enhanced input system.
+//init del sistema EIS
 void AGasPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -41,7 +42,7 @@ void AGasPlayerController::SetupInputComponent()
 					EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AGasPlayerController::Move);
 					EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AGasPlayerController::Look);
 					EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AGasPlayerController::Jump);
-					EnhancedInputComponent->BindAction(SlideAction, ETriggerEvent::Triggered, this, &AGasPlayerController::Slide);
+					EnhancedInputComponent->BindAction(SlideAction,ETriggerEvent::Triggered, this, &AGasPlayerController::Slide);
 					EnhancedInputComponent->BindAction(Ability1, ETriggerEvent::Triggered, this, &AGasPlayerController::Ability1Action1);
 					EnhancedInputComponent->BindAction(Ability2, ETriggerEvent::Triggered, this, &AGasPlayerController::Ability1Action2);
 					EnhancedInputComponent->BindAction(Ability3, ETriggerEvent::Triggered, this, &AGasPlayerController::Ability1Action3);
@@ -54,45 +55,29 @@ void AGasPlayerController::SetupInputComponent()
 		}
 	}
 }
-
+//===========================================================================================
 void AGasPlayerController::BeginPlay()
 {
-	
-	
 	Super::BeginPlay();
-
-	
 	ControlledPawn = GetPawn();
 	//ControlledCharacter = Cast<AGasCharacter>(ControlledPawn);
 	PlayerState = GetPlayerState<GasPlayerState>();
 	//StartVoiceChat();
-
-	
-
-
 }
 //===========================================================================================
 void AGasPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//
+	//test para controlar con sliding, puede ser mejorado con set timer by function.
 	if(bIsSliding)
 	{
 		FindCurrentFloorAngleAndDirection();
 		FVector Velocity = ControlledCharacter->GetCharacterMovement()->Velocity;
 		float velf = Velocity.Size();
-		//UE_LOG(LogTemp, Warning, TEXT("velocidad : %f"), velf);
 	}
-	if (ControlledCharacter)
-	{
-		if (ControlledCharacter->GetCharacterMovement()->IsFalling())
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("cayendo"));
-		}
-	}
-
 }
 //===========================================================================================
+//control del pawn que se obtiene con sus habilidades listadas en la clase GasCharacter.
 void AGasPlayerController::OnPossess(APawn* aPawn)
 {
 	Super::OnPossess(aPawn);
@@ -102,17 +87,17 @@ void AGasPlayerController::OnPossess(APawn* aPawn)
 		ControlledCharacter = Cast<AGasCharacter>(aPawn);
 		if (ControlledCharacter)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("PAWN VALIDO PARA PERMISO INPUT"))
+			//UE_LOG(LogTemp, Warning, TEXT("PAWN VALIDO PARA PERMISO INPUT"))
 
 			PermissionAbilityInputs(ControlledCharacter);
 			CharSlideMontage = ControlledCharacter->SlideMontage;
 			ChareEndSlideMontage = ControlledCharacter->EndSlideMontage;
 
-			UE_LOG(LogTemp, Warning, TEXT("El anim montage es : %s"), *CharSlideMontage->GetName());
+			//UE_LOG(LogTemp, Warning, TEXT("El anim montage es : %s"), *CharSlideMontage->GetName());
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("PAWN NO  VALIDO PARA PERMISO INPUT"))
+			//UE_LOG(LogTemp, Warning, TEXT("PAWN NO  VALIDO PARA PERMISO INPUT"))
 
 			return;
 		}
@@ -120,7 +105,7 @@ void AGasPlayerController::OnPossess(APawn* aPawn)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("PC NO VALIDO"))
+		//UE_LOG(LogTemp, Warning, TEXT("PC NO VALIDO"))
 
 		return;
 	}
@@ -129,15 +114,13 @@ void AGasPlayerController::OnPossess(APawn* aPawn)
 	
 }
 //===========================================================================================
-
+//movimiento basico para 3era persona.
 void AGasPlayerController::Move(const FInputActionValue& Value)
 {
-	
 	if ( ControlledPawn != nullptr)
 	{
 		
 		const FVector2D MovementVector = Value.Get<FVector2D>();
-		//MOVIMIENTO BASICO 
 		const FRotator Rotation = ControlledPawn->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
@@ -149,11 +132,9 @@ void AGasPlayerController::Move(const FInputActionValue& Value)
 
 		
 	}
-	
-	
 }
 //===========================================================================================
-
+//movimiento de la camara basica para 3era persona
 void AGasPlayerController::Look(const FInputActionValue& Value)
 {
 	FVector MouseLocation, MouseDirection;
@@ -161,12 +142,11 @@ void AGasPlayerController::Look(const FInputActionValue& Value)
 
 	if (ControlledPawn != nullptr)
 	{
-
 		FVector2D AimInput = Value.Get<FVector2D>();
 		if (AimInput.IsZero())
 		{
 			bAiming = false;
-			UE_LOG(LogTemp, Warning, TEXT("el valor es %s"), *AimInput.ToString());
+			//UE_LOG(LogTemp, Warning, TEXT("el valor es %s"), *AimInput.ToString());
 		}
 
 		ControlledPawn-> AddControllerYawInput(AimInput.X);
@@ -178,7 +158,8 @@ void AGasPlayerController::Look(const FInputActionValue& Value)
 
 void AGasPlayerController::Jump(const FInputActionValue& Value)
 {
-	
+	//control de salto parkour para obtener diferentes alturas de superficies.
+	//AnimMontage controladas desde el GasCharacter.
 	if (ControlledCharacter != nullptr)
 	{
 		bool bIsJumping = Value.Get<bool>();
@@ -251,9 +232,6 @@ void AGasPlayerController::Jump(const FInputActionValue& Value)
 						float distanceToFall = HitResult.Distance;
 						GetWorld()->GetTimerManager().SetTimer(JumpDistances, this, &AGasPlayerController::JumpZVelocity, 0.1f, true);
 						DistanceToFloorRecieved = distanceToFall;
-						
-						
-						
 					}
 				}
 			}
@@ -262,14 +240,11 @@ void AGasPlayerController::Jump(const FInputActionValue& Value)
 		}
 		else if (bIsSliding && bCantJump)
 		{
-			
-			ResetMovements(rotationToNormalPos, false, meshNormalPosition,CameraBoomInit, 300.f ,false, CharSlideMontage ,ChareEndSlideMontage);
-			//ControlledCharacter->Jump();
+			ResetMovements(rotationToNormalPos, false, meshNormalPosition,CameraBoomInit, 300.f ,false, CharSlideMontage ,ChareEndSlideMontage);//funcion creada para detener AnimMontage Slide y colocarse de pie
 			ControlledCharacter->Jump();
 			bCanSlide = true;
 			GetWorld()->GetTimerManager().SetTimer(JumpDistances, this, &AGasPlayerController::JumpDistance, 0.1f, true);
-			GetWorld()->GetTimerManager().ClearTimer(ActSlidePosition);
-			
+			GetWorld()->GetTimerManager().ClearTimer(ActSlidePosition);	
 		}
 		else
 		{
@@ -283,13 +258,13 @@ void AGasPlayerController::Jump(const FInputActionValue& Value)
 	}	
 }
 //===========================================================================================
-
+//slide input
 void AGasPlayerController::Slide(const FInputActionValue& Value)
 {
 	
 	FVector Velocity = ControlledCharacter->GetCharacterMovement()->Velocity;
 	
-	FVector meshSlidePosition = FVector(0.f, 0.f, -35.f);
+	FVector meshSlidePosition = FVector(0.f, 0.f, -35.f); //ubicacion relativa de la posicion del mesh para que se acople mejor al suelo. puede modificarse.
 	UE_LOG(LogTemp, Warning, TEXT("el input value es: %s"), bCanSlide ? TEXT("true") : TEXT("False"));
 	if (bCanSlide && CharSlideMontage && Velocity.Size() > 200.f && !ControlledCharacter->GetCharacterMovement()->IsFalling())
 	{
@@ -330,7 +305,7 @@ UInputAction* AGasPlayerController::GetInputActionFromAbilityInputID(EGA_Ability
 	return nullptr; // Acción no encontrada
 }
 //===========================================================================================
-
+//Ability actions inicializadas sin funcionalidad ya que se activa en el GAS Gameplay ability
 void AGasPlayerController::Ability1Action1(){}
 
 void AGasPlayerController::Ability1Action2(){}
@@ -342,13 +317,14 @@ void AGasPlayerController::Ability1Action4(){}
 void AGasPlayerController::Ability1Action5(){}
 
 //===========================================================================================
+//funcion llamada en el OnPosses para obtener unicamente la habilidades del pawn obtenido (GasCharacter) con su listado de habilidades asociados a los inputs 
 void AGasPlayerController::PermissionAbilityInputs(AGasCharacter* character)
 {
 	
 	if (character && character->AbilitySystemComponenet)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("ASC"));
-		for (TSubclassOf<UGA_Ere> AbilityClass : character->StartingAbilities)
+		//UE_LOG(LogTemp, Warning, TEXT("ASC"));
+		for (TSubclassOf<UGA_Ere> AbilityClass : character->StartingAbilities)//Habilidades asociadas en el array del GasCharacter.
 		{
 			if (AbilityClass)
 			{
@@ -367,8 +343,7 @@ void AGasPlayerController::PermissionAbilityInputs(AGasCharacter* character)
 						EInputComponent->BindAction(InputAction, ETriggerEvent::Started, this, &AGasGasPlayerController::OnAbilityInputPressed, InputID);
 						EInputComponent->BindAction(InputAction, ETriggerEvent::Completed, this, &AGasGasPlayerController::OnAbilityInputReleased, InputID);
 
-						// Log para depuración
-						UE_LOG(LogTemp, Warning, TEXT("Acción vinculada para Habilidad: %s con InputID: %d"),
+						//UE_LOG(LogTemp, Warning, TEXT("Acción vinculada para Habilidad: %s con InputID: %d"),
 							*AbilityClass->GetName(),
 							InputID);
 					}
@@ -376,7 +351,7 @@ void AGasPlayerController::PermissionAbilityInputs(AGasCharacter* character)
 			}
 			else
 			{
-				UE_LOG(LogTemp, Warning, TEXT("no abilities"));
+				//UE_LOG(LogTemp, Warning, TEXT("no abilities"));
 				return;
 
 			}
@@ -392,6 +367,7 @@ void AGasPlayerController::PermissionAbilityInputs(AGasCharacter* character)
 }
 
 //===========================================================================================
+//DEPRECATED
 void AGasGasPlayerController::SendAbilityLocalInput(const FInputActionValue& Value, int32 InputID)
 {
 	if (!ControlledCharacter->AbilitySystemComponenet)
@@ -408,6 +384,8 @@ void AGasGasPlayerController::SendAbilityLocalInput(const FInputActionValue& Val
 	}
 }
 //===========================================================================================
+//funcion de replicacion de variables.
+//Replicacion cliente servidor, multicast. para obtener la direccion de apuntado del GasCharacter.
 void AGasGasPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -426,7 +404,7 @@ void AGasGasPlayerController::ServerSetAimDirection_Implementation(const FVector
 }
 
 //===========================================================================================
-
+//Deprecated
 void AGasGasPlayerController::OnAbilityInputPressed(int32 InputID)
 {
 	if (ControlledCharacter->AbilitySystemComponenet)
@@ -435,6 +413,7 @@ void AGasGasPlayerController::OnAbilityInputPressed(int32 InputID)
 	}
 }
 //===========================================================================================
+//Deprecated
 void AGasGasPlayerController::OnAbilityInputReleased(int32 InputID)
 {
 	if (ControlledCharacter->AbilitySystemComponenet)
@@ -449,6 +428,7 @@ void AGasGasPlayerController::ActForward()
 	AimDirection =  ControlledPawn->GetActorForwardVector();
 }
 //===========================================================================================
+//obtener la colision con el suelo cuando activamos el Slide para llamar funciones de alineacion con la superficie y sus normales.
 void AGasGasPlayerController::tracefloorWhileSliding()
 {
 	FVector StartPos = ControlledCharacter->GetActorLocation();
@@ -488,6 +468,7 @@ void AGasGasPlayerController::tracefloorWhileSliding()
 
 }
 //===========================================================================================
+//obtencion del suelo colisionado para obtener su inclinacion.
 void AGasGasPlayerController::allignPlayerToFloor()
 {
 	const FFindFloorResult& CurrentFloor = ControlledCharacter->GetCharacterMovement()->CurrentFloor;
@@ -500,6 +481,7 @@ void AGasGasPlayerController::allignPlayerToFloor()
 	ControlledCharacter->SetActorRotation(interPolResult);
 }
 //===========================================================================================
+//obtener colisiones frontales si el personale choca cuando se esta deslizando.
 void AGasGasPlayerController::FootFrwContact()
 {
 	const FFindFloorResult& CurrentFloor = ControlledCharacter->GetCharacterMovement()->CurrentFloor;
@@ -563,6 +545,7 @@ void AGasGasPlayerController::FootFrwContact()
 			
 		 } 
 	 }
+	 //control de velocidad para que no se pueda deslizar si la velocidad es menor a.....
 	 if (Velocity <=150.f)
 	 {
 		
@@ -580,6 +563,7 @@ void AGasGasPlayerController::FootFrwContact()
 		 GetWorld()->GetTimerManager().ClearTimer(ActSlidePosition);
 		 UE_LOG(LogTemp, Warning, TEXT(" stop por velocidad"))
 	 }
+	 // si no esta colisionando con nada detener el slide (ejem. deslizarse en una superficie con altura y caer fuera de ella)
 	 else if(!bHitSphere && !bhitFall)
 	 {
 		 FRotator ForwardRotation = ControlledCharacter->GetActorForwardVector().Rotation();
@@ -624,7 +608,7 @@ bool AGasGasPlayerController::SphereTrace(FHitResult HitResult, FVector startPos
 }
 
 //===========================================================================================
-
+//Obtener el angulo de la normal de la superficie.
 void AGasGasPlayerController::FindCurrentFloorAngleAndDirection()
 {
 	const FFindFloorResult& CurrentFloor = ControlledCharacter->GetCharacterMovement()->CurrentFloor;
@@ -679,11 +663,13 @@ void AGasGasPlayerController::FindCurrentFloorAngleAndDirection()
 	
 }
 //===========================================================================================
+//Funion para manejar el crouch y UnCrouch con mas control AUN NO IMPLEMENTADA
 void AGasGasPlayerController::CrouchUnCrouchPosition(FVector CameraBoomPositionObj, FVector ActualCameraBoomPosition,  float interpSeconds)
 {
 	CameraBoomPositionObj = FMath::VInterpTo(CameraBoomPositionObj, ActualCameraBoomPosition, GetWorld()->GetDeltaSeconds(), 2.0f);
 }
-
+//===========================================================================================
+//Creacion de una parabola simple para predecir donde va a caer el personaje (para el parkour system)
 void AGasGasPlayerController::JumpDistance()
 {
 	FVector StartLocation = ControlledCharacter->GetActorLocation();
@@ -756,6 +742,7 @@ void AGasGasPlayerController::JumpDistance()
 	}
 }
 //===========================================================================================
+//obtencion de la velicidad en Z para reprodicir diferentes tipos de Aterrizajes (AnimationBlueprint(ABP))
 void AGasGasPlayerController::JumpZVelocity()
 {
 	JumpVelocityZ = ControlledCharacter->GetCharacterMovement()->Velocity.Z;
@@ -778,6 +765,7 @@ void AGasGasPlayerController::JumpZVelocity()
 	}
 }
 //===========================================================================================
+//Funcion para controlar el crouch uncrouch del personaje en el slide (Implementando funcion en algunos casos) TESTEO
 void AGasGasPlayerController::ResetMovements(FRotator RotationToFrwPosition, bool crouch, FVector charMeshSlidePosition,FVector cameraPosition, float crouchSpeed, bool IsSliding , UAnimMontage* AnimStop,UAnimMontage* AnimPlay)
 {
 	ControlledCharacter->SetActorRotation(RotationToFrwPosition);
@@ -802,7 +790,7 @@ void AGasGasPlayerController::ResetMovements(FRotator RotationToFrwPosition, boo
 	}
 	else
 	{
-
+		return;
 	}
 	
 }
